@@ -1,6 +1,8 @@
 "use client";
 
 import * as z from "zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useStoreModel } from "@/hooks/use-store-modal";
 import { Modal } from "@/components/ui/modal";
@@ -12,6 +14,17 @@ const formSchema = z.object({
 export const StoreModal = () => {
     const storeModal = useStoreModel;
 
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            name: "",
+        }
+    })
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values)
+    }
+
     return (
         <Modal
             title="Create store"
@@ -19,7 +32,11 @@ export const StoreModal = () => {
             isOpen={storeModal.isOpen}
             onClose={storeModal.onClose}
         >
-            Future Creare Store Form
+            <div>
+                <div className="space-y-4 py-2 pb-4">
+
+                </div>
+            </div>
         </Modal >
     )
 }
