@@ -1,7 +1,13 @@
 "use client";
 
+import * as z from "zod"
+
 import { useStoreModel } from "@/hooks/use-store-modal";
 import { Modal } from "@/components/ui/modal";
+
+const formSchema = z.object({
+    name: z.string().min(1)
+})
 
 export const StoreModal = () => {
     const storeModal = useStoreModel;
