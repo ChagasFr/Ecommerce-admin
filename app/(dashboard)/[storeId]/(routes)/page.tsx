@@ -4,7 +4,6 @@ interface DashBoardPageProps {
     params: { storeId: string }
 }
 
-
 const DashboardLayout: React.FC<DashBoardPageProps> = async ({
     params
 }) => {
