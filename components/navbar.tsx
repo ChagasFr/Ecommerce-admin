@@ -1,7 +1,7 @@
 import { UserButton } from "@clerk/nextjs"
-import StoreSwitcher from "./store-switcher"
 
 import { MainNav } from "./main-nav"
+import StoreSwitcher from "./store-switcher"
 
 const Navbar = () => {
     return (
