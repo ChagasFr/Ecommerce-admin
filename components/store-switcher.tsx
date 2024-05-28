@@ -2,14 +2,15 @@
 
 import { Store } from "@prisma/client"
 
-import { PopoverTrigger } from "@/components/ui/popover"
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
+import { PopoverTrigger } from "@/components/ui/popover"
+import { useStoreModel } from "@/hooks/use-store-modal";
 
 type PopoverTriggerProps = React.ComponentPropsWithRef<typeof PopoverTrigger>
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
-    item: Store[]
+    items: Store[]
 }
 
 export default function StoreSwitcher({
@@ -24,6 +25,8 @@ export default function StoreSwitcher({
         label: item.name,
         value: item.id
     }))
+
+    const currentStore = formattedItems.find((item) => item.value === params.storeId);
     return (
         <div>
             Store Switcher
