@@ -19,13 +19,20 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({
 
     const store = await prismadb.store.findFirst({
         where: {
-            id: params.storeId
+            id: params.storeId,
+            userId
         }
     })
 
+    if (!store) {
+        redirect("/")
+    }
+
     return (
-        <div>
-            Hello Settings
+        <div className="flex-col">
+            <div className="flex-1 -space-y-4 p-8 pt-6">
+                Hello Settings
+            </div>
         </div>
     )
 }
