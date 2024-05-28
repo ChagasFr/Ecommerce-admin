@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, Store as StoreIcon } from "lucide-react";
+import { Check, ChevronsUpDown, Store as StoreIcon } from "lucide-react";
 import { Store } from "@prisma/client"
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -8,7 +8,8 @@ import { useParams, useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useStoreModel } from "@/hooks/use-store-modal";
 import { Button } from "@/components/ui/button";
-import { Command, CommandInput, CommandList } from "@/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 type PopoverTriggerProps = React.ComponentPropsWithRef<typeof PopoverTrigger>
 
@@ -50,7 +51,18 @@ export default function StoreSwitcher({
                 <Command>
                     <CommandList>
                         <CommandInput placeholder="Search store..." />
+                        <CommandEmpty>No store found.</CommandEmpty>
+                        <CommandGroup heading="Stores">
+                            {formattedItems.map((store) => (
+                                <CommandItem key={store.value} onSelect={() => onStoreSelect(store)} className="text-sm">
+                                    <StoreIcon className="mr-2 h-4 w-4" />
+                                    {store.label}
+                                    <Check className={cn("ml-auto h-4 w-4", currentStore?.value === store.value ? "opacity-100" : "opacity-0")} />
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
                     </CommandList>
+                    <CommandSeparator></CommandSeparator>
                 </Command>
             </PopoverContent>
         </Popover>
