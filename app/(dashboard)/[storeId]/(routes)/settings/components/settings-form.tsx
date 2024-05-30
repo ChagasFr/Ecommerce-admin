@@ -1,7 +1,9 @@
 "use client"
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
 import { Store } from "@prisma/client";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -12,11 +14,17 @@ interface SettingsFormProps {
 
 const formSchema = z.object({
     name: z.string().min(1)
-})
+});
+
+type SettingsFormValues = z.infer<typeof formSchema>
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({
     initialData
 }) => {
+    const form = useForm<SettingsFormValues>({
+        resolver: zodResolver(formSchema)
+    })
+
     return (
         <>
             <div className="flex items-center justify-between">
