@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Modal } from "@/components/ui/modal";
 
 interface AlertModalProps {
     isOpen: boolean;
@@ -15,5 +16,21 @@ export const AlertModal: React.FC<AlertModalProps> = ({
     onConfirm,
     loading,
 }) => {
-    const [isMountedm setIsMounted] = useState(false)
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    if (!isMounted) {
+        return null;
+    }
+
+    return (
+        <Modal title="Are you sure" description="This action cannot be Undone." isOpen={isOpen} onClose={onClose}>
+            <div>
+
+            </div>
+        </Modal>
+    )
 }
