@@ -82,19 +82,21 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={onDelete} loading={loading} />
             <div className="flex items-center justify-between">
                 <Heading title={title} description={description} />
-                <Button disabled={loading} variant="destructive" size="sm" onClick={() => { }}>
-                    <Trash className="h-4 w-4" />
-                </Button>
+                {initialData && (
+                    <Button disabled={loading} variant="destructive" size="sm" onClick={() => { }}>
+                        <Trash className="h-4 w-4" />
+                    </Button>
+                )}
             </div>
             <Separator></Separator>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
                     <div className="grid grid-cols-3 gap-8">
-                        <FormField control={form.control} name="name" render={({ field }) => (
+                        <FormField control={form.control} name="label" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel>LAbel</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="store name" {...field} />
+                                    <Input disabled={loading} placeholder="Billboard label" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
