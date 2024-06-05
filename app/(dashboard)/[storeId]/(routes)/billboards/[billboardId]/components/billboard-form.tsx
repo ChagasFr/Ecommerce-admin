@@ -16,6 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { ApiAlert } from "@/components/ui/api-alert";
+import ImagemUpLoad from "@/components/ui/image-upload";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -91,6 +92,16 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             <Separator></Separator>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+                    <FormField control={form.control} name="imageUrl" render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Background image</FormLabel>
+                            <FormControl>
+                                <ImagemUpLoad value={field.value ? [field.value] : []} disabled={loading} onChange={(url) => field.onChange(url)} onRemove={() => field.onChange("")} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
                     <div className="grid grid-cols-3 gap-8">
                         <FormField control={form.control} name="label" render={({ field }) => (
                             <FormItem>
