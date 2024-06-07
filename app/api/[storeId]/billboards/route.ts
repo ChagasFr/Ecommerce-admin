@@ -67,7 +67,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(billboards);
   } catch (error) {
-    console.log("[BILLBOARDS_POST]", error);
+    console.log("[BILLBOARDS_GET]", error);
     return new NextResponse("Interal error", { status: 500 });
   }
 }
