@@ -2,6 +2,30 @@ import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export async function GET(
+  req: Request,
+  { params }: { params: { billboardId: string } }
+) {
+  try {
+    const { userId } = auth();
+
+    if (!params.billboardId) {
+      return new NextResponse("billboard is required", { status: 400 });
+    }
+
+    const billboard = await prismadb.billboard.findUnique({
+      where: {
+        id: params.billboardId,
+      },
+    });
+
+    return NextResponse.json(billboard);
+  } catch (error) {
+    console.log("[BILLBOARD_DELETE]", error);
+    return new NextResponse("interna error", { status: 500 });
+  }
+}
+
 export async function PATCH(
   req: Request,
   { params }: { params: { storeId: string; billboardId: string } }
@@ -78,16 +102,16 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const store = await prismadb.store.deleteMany({
+    const billboard = await prismadb.billboard.deleteMany({
       where: {
-        id: params.storeId,
+        id: params.billboardId,
         userId,
       },
     });
 
-    return NextResponse.json(store);
+    return NextResponse.json(billboard);
   } catch (error) {
-    console.log("[STORE_DELETE]", error);
+    console.log("[BILLBOARD_DELETE]", error);
     return new NextResponse("interna error", { status: 500 });
   }
 }
