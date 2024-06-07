@@ -38,23 +38,23 @@ export async function PATCH(
     const billboard = await prismadb.billboard.updateMany({
       where: {
         id: params.billboardId,
-        userId,
       },
       data: {
-        name,
+        label,
+        imageUrl,
       },
     });
 
-    return NextResponse.json(store);
+    return NextResponse.json(billboard);
   } catch (error) {
-    console.log("[STORE_PATCH]", error);
+    console.log("[BILLBOARD_PATCH]", error);
     return new NextResponse("interna error", { status: 500 });
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string; billboardId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -63,8 +63,19 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!params.storeId) {
-      return new NextResponse("Name is required", { status: 400 });
+    if (!params.billboardId) {
+      return new NextResponse("billboard is required", { status: 400 });
+    }
+
+    const storeByUserId = await prismadb.store.findFirst({
+      where: {
+        id: params.storeId,
+        userId,
+      },
+    });
+
+    if (!storeByUserId) {
+      return new NextResponse("Unauthorized", { status: 403 });
     }
 
     const store = await prismadb.store.deleteMany({
