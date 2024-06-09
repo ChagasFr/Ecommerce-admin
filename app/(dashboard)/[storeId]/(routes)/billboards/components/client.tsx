@@ -6,14 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 
-import { BillboardColum } from "./columns";
+import { BillboardColum, columns } from "./columns";
+import { DataTable } from "@/components/ui/data-table";
 
 interface BillboardClientProps {
     data: BillboardColum[]
 }
 
 export const BillboardClient: React.FC<BillboardClientProps> = ({
-
+    data
 }) => {
     const router = useRouter
     const params = useParams
@@ -29,6 +30,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
                 </Button>
             </div>
             <Separator />
+            <DataTable columns={columns} data={data} />
         </>
     )
 }
