@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { BillboardColum } from "./columns"
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react"
 import toast from "react-hot-toast"
+import { useRouter, useParams } from "next/navigation"
 
 interface CellActionProps {
     data: BillboardColum
@@ -14,6 +15,9 @@ interface CellActionProps {
 export const CellAction: React.FC<CellActionProps> = ({
     data
 }) => {
+    const router = useRouter();
+    const params = useParams();
+
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id)
         toast.success("Api route copied to the clipboard")
@@ -31,11 +35,11 @@ export const CellAction: React.FC<CellActionProps> = ({
                 <DropdownMenuLabel>
                     Actions
                 </DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => onCopy(data)}>
+                <DropdownMenuItem onClick={() => onCopy(data.id)}>
                     <Copy className="mr-2 h-4" w-4 />
                     Copy Id
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards${data.id}`)}>
                     <Edit className="mr-2 h-4" w-4 />
                     Update
                 </DropdownMenuItem>
