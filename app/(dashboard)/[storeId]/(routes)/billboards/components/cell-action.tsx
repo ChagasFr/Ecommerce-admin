@@ -1,13 +1,15 @@
 "use client"
-
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-
-import { BillboardColum } from "./columns"
+import { useState } from "react"
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react"
 import toast from "react-hot-toast"
 import { useRouter, useParams } from "next/navigation"
+import axios from "axios"
 
+import { Button } from "@/components/ui/button"
+
+import { BillboardColum } from "./columns"
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 interface CellActionProps {
     data: BillboardColum
 }
@@ -18,10 +20,28 @@ export const CellAction: React.FC<CellActionProps> = ({
     const router = useRouter();
     const params = useParams();
 
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id)
         toast.success("Api route copied to the clipboard")
     };
+
+    const onDelete = async () => {
+        try {
+            setLoading(true)
+            await axios.delete(`/api/stores${params.storeId}/billboards/${params.billboardId}`)
+            router.refresh();
+            router.push("/");
+            toast.success("Billboard deleted.");
+        } catch (error) {
+            toast.error("Make sure you removed all products and categories first")
+        } finally {
+            setLoading(false)
+            setOpen(false)
+        }
+    }
 
     return (
         <DropdownMenu>
