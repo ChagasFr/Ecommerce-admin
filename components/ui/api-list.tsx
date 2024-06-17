@@ -20,7 +20,11 @@ export const ApiList: React.FC<ApiListProps> = ({
     const baseUrl = `${origin}/api/${params.storeId}`;
     return (
         <>
-            <ApiAlert />
+            <ApiAlert title="GET" variant="public" description={`${baseUrl}/${entityName}`} />
+
+            <ApiAlert title="GET" variant="public" description={`${baseUrl}/${entityName}/{${entityIdName}}`} />
+
+            <ApiAlert title="POST" variant="admin" description={`${baseUrl}/${entityName}/{${entityIdName}}`} />
         </>
     )
 }
