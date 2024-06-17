@@ -5,9 +5,11 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/data-table";
+
 
 import { BillboardColum, columns } from "./columns";
-import { DataTable } from "@/components/ui/data-table";
+import { ApiList } from "@/components/ui/api-list";
 
 interface BillboardClientProps {
     data: BillboardColum[]
@@ -31,6 +33,9 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             </div>
             <Separator />
             <DataTable searchKey="label" columns={columns} data={data} />
+            <Heading title="API" description="API calss for billboards" />
+            <Separator />
+            <ApiList />
         </>
     )
 }
