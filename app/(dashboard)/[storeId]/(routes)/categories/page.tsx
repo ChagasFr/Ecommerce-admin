@@ -10,25 +10,29 @@ const CategoriesPage = async ({
 }: {
     params: { storeId: string }
 }) => {
-    const billboards = await prismadb.billboard.findMany({
+    const categories = await prismadb.category.findMany({
         where: {
             storeId: params.storeId
+        },
+        include: {
+            Billboard: true,
         },
         orderBy: {
             createdAt: 'desc'
         }
     })
 
-    const formattedBillboards: BillboardColum[] = billboards.map((item) => ({
+    const formattedCategories: BillboardColum[] = categories.map((item) => ({
         id: item.id,
-        label: item.label,
+        name: item.name,
+        billboardLabel: item.billboard.label,
         createdAt: format(item.createdAt, "MMMM do, YYYY")
     }))
 
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <BillboardClient data={formattedBillboards} />
+                <BillboardClient data={formattedCategories} />
             </div>
         </div>
     )
