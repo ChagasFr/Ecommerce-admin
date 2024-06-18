@@ -18,7 +18,14 @@ export const columns: ColumnDef<CategoryColum>[] = [
     {
         accessorKey: "billboard",
         header: "Billboard",
+        cell: ({ row }) => row.original.billboardLabel,
     },
+
+    {
+        accessorKey: "createdAt",
+        header: "Date",
+    },
+
     {
         id: "actions",
         cell: ({ row }) => <CellAction data={row.original} />
