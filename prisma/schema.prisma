@@ -19,11 +19,10 @@ model Store {
   id         String      @id @default(uuid())
   name       String
   userID     String
-  updatedAt  DateTime    @updatedAt
   Billboard  Billboard[] @relation("StoreToBillboard")
   Categories Category[]  @relation("StoreToCategory")
   createdAt  DateTime    @default(now())
-  updateAt   DateTime    @updatedAt
+  updatedAt  DateTime    @updatedAt
 }
 
 model Billboard {
@@ -34,7 +33,7 @@ model Billboard {
   imageUrl   String
   categories Category[]
   createdAt  DateTime   @default(now())
-  updateAt   DateTime   @updatedAt
+  updatedAt  DateTime   @updatedAt
 
   @@index([storeId])
 }
@@ -47,5 +46,8 @@ model Category {
   billboardId String?
   name        String
   createdAt   DateTime   @default(now())
-  updateAt    DateTime   @updatedAt
+  updatedAt   DateTime   @updatedAt
+
+  @@index([storeId])
+  @@index([billboardId])
 }
