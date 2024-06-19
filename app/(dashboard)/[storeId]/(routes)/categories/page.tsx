@@ -3,7 +3,7 @@ import { format } from "date-fns"
 import prismadb from "@/lib/prismadb"
 
 import { BillboardClient } from "./components/client"
-import { BillboardColum } from "./components/columns"
+import { CategoryColum } from "./components/columns"
 
 const CategoriesPage = async ({
     params
@@ -22,7 +22,7 @@ const CategoriesPage = async ({
         }
     })
 
-    const formattedCategories: BillboardColum[] = categories.map((item) => ({
+    const formattedCategories: CategoryColum[] = categories.map((item) => ({
         id: item.id,
         name: item.name,
         billboardLabel: item.billboard.label,

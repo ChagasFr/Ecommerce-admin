@@ -8,14 +8,14 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
 
 
-import { BillboardColum, columns } from "./columns";
+import { CategoryColum, columns } from "./columns";
 import { ApiList } from "@/components/ui/api-list";
 
-interface BillboardClientProps {
-    data: BillboardColum[]
+interface CategoryClientProps {
+    data: CategoryColum[]
 }
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({
+export const CategoryClient: React.FC<CategoryClientProps> = ({
     data
 }) => {
     const router = useRouter
