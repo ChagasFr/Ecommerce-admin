@@ -20,12 +20,10 @@ export const columns: ColumnDef<CategoryColum>[] = [
         header: "Billboard",
         cell: ({ row }) => row.original.billboardLabel,
     },
-
     {
         accessorKey: "createdAt",
         header: "Date",
     },
-
     {
         id: "actions",
         cell: ({ row }) => <CellAction data={row.original} />
