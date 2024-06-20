@@ -70,4 +70,4 @@ export async function GET(req: Request) {
     console.log("[CATEGORIES_GET]", error);
     return new NextResponse("Interal error", { status: 500 });
   }
-}
+};
