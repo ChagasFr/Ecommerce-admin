@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
-import { Category } from "@prisma/client";
+import { Billboard, Category } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -26,10 +26,12 @@ type CategoryFormValues = z.infer<typeof formSchema>
 
 interface CategoryFormProps {
     initialData: Category | null;
+    billboards: Billboard[];
 }
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({
-    initialData
+    initialData,
+    billboards
 }) => {
     const params = useParams()
     const router = useRouter
@@ -54,12 +56,12 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         try {
             setLoading(true)
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+                await axios.patch(`/api/${params.storeId}/categories/${params.categoryId}`, data);
             } else {
-                await axios.post(`/api/${params.storeId}/billboards`, data);
+                await axios.post(`/api/${params.storeId}/categories`, data);
             }
             router.refresh();
-            router.push(`${params.storeId}/billboards`)
+            router.push(`${params.storeId}/categories`)
             toast.success(toastMessage);
         } catch (error) {
             toast.error("Something went wrong")
@@ -71,12 +73,12 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/stores${params.storeId}/billboards/${params.billboardId}`)
+            await axios.delete(`/api/stores${params.storeId}/categories/${params.categoryId}`)
             router.refresh();
-            router.push(`/${params.storeId}/billboards`);
-            toast.success("Billboard deleted.");
+            router.push(`/${params.storeId}/categories`);
+            toast.success("Category deleted.");
         } catch (error) {
-            toast.error("Make sure you removed all products and categories first")
+            toast.error("Make sure you removed all products and category first")
         } finally {
             setLoading(false)
             setOpen(false)
@@ -118,7 +120,11 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-
+                                        {billboards.map((billboard) => (
+                                            <SelectItem key={billboard.id} value={billboard.id}>
+                                                {billboard.label}
+                                            </SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
