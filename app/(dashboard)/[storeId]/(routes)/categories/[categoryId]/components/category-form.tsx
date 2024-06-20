@@ -15,11 +15,11 @@ import { Separator } from "@/components/ui/separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import ImagemUpLoad from "@/components/ui/image-upload";
+import { Select } from "@/components/ui/select";
 
 const formSchema = z.object({
     name: z.string().min(1),
-    imageUrl: z.string().min(1)
+    billboardId: z.string().min(1)
 });
 
 type CategoryFormValues = z.infer<typeof formSchema>
@@ -37,16 +37,16 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false)
 
-    const title = initialData ? "Edit billboard" : "Create billboard";
-    const description = initialData ? "Edit a billboard" : "Add a new billboard";
-    const toastMessage = initialData ? "Billboard updated." : "Billboard created.";
+    const title = initialData ? "Edit category" : "Create category";
+    const description = initialData ? "Edit a category" : "Add a new category";
+    const toastMessage = initialData ? "Category updated." : "Category created.";
     const action = initialData ? "Save changes" : "Create";
 
     const form = useForm<CategoryFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
-            label: '',
-            imageUrl: ''
+            name: '',
+            billboardId: ''
         }
     });
 
@@ -97,23 +97,26 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             <Separator></Separator>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-                    <FormField control={form.control} name="imageUrl" render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Background image</FormLabel>
-                            <FormControl>
-                                <ImagemUpLoad value={field.value ? [field.value] : []} disabled={loading} onChange={(url) => field.onChange(url)} onRemove={() => field.onChange("")} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                    />
                     <div className="grid grid-cols-3 gap-8">
-                        <FormField control={form.control} name="label" render={({ field }) => (
+                        <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>LAbel</FormLabel>
+                                <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Billboard label" {...field} />
+                                    <Input disabled={loading} placeholder="Category name" {...field} />
                                 </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+
+                        <FormField control={form.control} name="billboardId" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>billboardId</FormLabel>
+                                <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                                    <FormControl>
+
+                                    </FormControl>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
