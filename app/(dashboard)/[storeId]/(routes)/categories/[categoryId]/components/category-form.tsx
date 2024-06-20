@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { Select } from "@/components/ui/select";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -97,12 +98,25 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
                     <div className="grid grid-cols-3 gap-8">
-                        <FormField control={form.control} name="label" render={({ field }) => (
+                        <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>LAbel</FormLabel>
+                                <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Billboard label" {...field} />
+                                    <Input disabled={loading} placeholder="Category name" {...field} />
                                 </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+
+                        <FormField control={form.control} name="billboardId" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>billboardId</FormLabel>
+                                <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                                    <FormControl>
+
+                                    </FormControl>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
