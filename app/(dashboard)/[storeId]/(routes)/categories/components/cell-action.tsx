@@ -36,7 +36,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             router.refresh();
             toast.success("Category deleted.");
         } catch (error) {
-            toast.error("Make sure you removed all products and categories first")
+            toast.error("Make sure you removed all products and category first")
         } finally {
             setLoading(false)
             setOpen(false)
@@ -61,7 +61,7 @@ export const CellAction: React.FC<CellActionProps> = ({
                         <Copy className="mr-2 h-4" w-4 />
                         Copy Id
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories${data.id}`)}>
                         <Edit className="mr-2 h-4" w-4 />
                         Update
                     </DropdownMenuItem>
