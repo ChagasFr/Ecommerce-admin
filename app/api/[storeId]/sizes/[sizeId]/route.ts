@@ -4,22 +4,22 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: { sizeId: string } }
 ) {
   try {
     const { userId } = auth();
 
-    if (!params.billboardId) {
-      return new NextResponse("billboard is required", { status: 400 });
+    if (!params.sizeId) {
+      return new NextResponse("size id is required", { status: 400 });
     }
 
-    const billboard = await prismadb.billboard.findUnique({
+    const size = await prismadb.size.findUnique({
       where: {
-        id: params.billboardId,
+        id: params.sizeId,
       },
     });
 
-    return NextResponse.json(billboard);
+    return NextResponse.json(size);
   } catch (error) {
     console.log("[BILLBOARD_GET]", error);
     return new NextResponse("interna error", { status: 500 });
