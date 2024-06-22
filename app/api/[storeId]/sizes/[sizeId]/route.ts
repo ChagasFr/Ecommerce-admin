@@ -28,24 +28,28 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; sizeId: string } }
 ) {
   try {
     const { userId } = auth();
     const body = await req.json();
 
-    const { laben, imageUrl } = body;
+    const { name, value } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!imageUrl) {
-      return new NextResponse("image URL is required", { status: 400 });
+    if (!name) {
+      return new NextResponse("name is required", { status: 400 });
     }
 
-    if (!params.billboardId) {
-      return new NextResponse("billboard Id is required", { status: 400 });
+    if (!value) {
+      return new NextResponse("value is required", { status: 400 });
+    }
+
+    if (!params.sizeId) {
+      return new NextResponse("Size Id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
