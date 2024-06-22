@@ -70,10 +70,10 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/stores${params.storeId}/billboards/${params.billboardId}`)
+            await axios.delete(`/api/stores${params.storeId}/sizes/${params.sizeId}`)
             router.refresh();
-            router.push(`/${params.storeId}/billboards`);
-            toast.success("Billboard deleted.");
+            router.push(`/${params.storeId}/sizes`);
+            toast.success("Size deleted.");
         } catch (error) {
             toast.error("Make sure you removed all products and categories first")
         } finally {
