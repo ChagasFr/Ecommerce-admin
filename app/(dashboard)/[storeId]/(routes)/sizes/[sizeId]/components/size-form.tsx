@@ -53,12 +53,12 @@ export const SizeForm: React.FC<SizeFormProps> = ({
         try {
             setLoading(true)
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+                await axios.patch(`/api/${params.storeId}/sizes/${params.sizeId}`, data);
             } else {
-                await axios.post(`/api/${params.storeId}/billboards`, data);
+                await axios.post(`/api/${params.storeId}/sizes`, data);
             }
             router.refresh();
-            router.push(`${params.storeId}/billboards`)
+            router.push(`${params.storeId}/sizes`)
             toast.success(toastMessage);
         } catch (error) {
             toast.error("Something went wrong")
@@ -99,9 +99,20 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                     <div className="grid grid-cols-3 gap-8">
                         <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>LAbel</FormLabel>
+                                <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Billboard label" {...field} />
+                                    <Input disabled={loading} placeholder="Size Name" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+
+                        <FormField control={form.control} name="value" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Value</FormLabel>
+                                <FormControl>
+                                    <Input disabled={loading} placeholder="Size Value" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
