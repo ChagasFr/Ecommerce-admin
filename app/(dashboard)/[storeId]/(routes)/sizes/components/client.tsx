@@ -8,14 +8,14 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
 
 
-import { BillboardColum, columns } from "./columns";
+import { SizeColumn, columns } from "./columns";
 import { ApiList } from "@/components/ui/api-list";
 
-interface BillboardClientProps {
-    data: BillboardColum[]
+interface SizesClientProps {
+    data: SizeColumn[]
 }
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({
+export const SizesClient: React.FC<SizesClientProps> = ({
     data
 }) => {
     const router = useRouter
@@ -24,7 +24,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
     return (
         <>
             <div className="flex items-center justify-between">
-                <Heading title={`Billboards (${data.length})`} description="Manage billboards for your store" />
+                <Heading title={`Sizes (${data.length})`} description="Manage sizes for your store" />
 
                 <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
                     <Plus className="mr-2 h-4 w-4" />
