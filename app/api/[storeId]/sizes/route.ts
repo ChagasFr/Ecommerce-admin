@@ -9,18 +9,18 @@ export async function POST(req: Request) {
     const { userId } = auth();
     const body = await req.json();
     
-    const { label, imageUrl } = body;
+    const { name, value } = body;
     
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!label) {
-      return new NextResponse("label is required", { status: 400 });
+    if (!name) {
+      return new NextResponse("name is required", { status: 400 });
     }
 
-    if (!imageUrl) {
-      return new NextResponse("ImageUrl is required", { status: 400 });
+    if (!value) {
+      return new NextResponse("value is required", { status: 400 });
  
     }
     if (!params.storeId) {
@@ -38,17 +38,17 @@ export async function POST(req: Request) {
         return new NextResponse("Unauthorized", { status: 403 })
     }
     
-    const billboard = await prismadb.billboard.create({
+    const size = await prismadb.size.create({
         data: {
-            label,
-        imageUrl,
+        name,
+        value,
         storeId: params.storeId
     },
     });
 
-    return NextResponse.json(billboard);
+    return NextResponse.json(size);
 } catch (error) {
-    console.log("[BILLBOARDS_POST]", error);
+    console.log("SIZES_POST]", error);
     return new NextResponse("Interal error", { status: 500 });
 
 }
@@ -59,15 +59,15 @@ export async function GET(req: Request) {
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
-    const billboards = await prismadb.billboard.findMany({
+    const size = await prismadb.size.findMany({
         where: {
-            storeId: params.storeId
+        storeId: params.storeId
         }
     });
 
-    return NextResponse.json(billboards);
+    return NextResponse.json(size);
   } catch (error) {
-    console.log("[BILLBOARDS_GET]", error);
+    console.log("[SIZES_GET]", error);
     return new NextResponse("Interal error", { status: 500 });
   }
 }
