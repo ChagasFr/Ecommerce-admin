@@ -75,9 +75,9 @@ export const ColorForm: React.FC<ColorFormProps> = ({
             await axios.delete(`/api/stores${params.storeId}/colors/${params.colorId}`)
             router.refresh();
             router.push(`/${params.storeId}/colors`);
-            toast.success("Size deleted.");
+            toast.success("Color deleted.");
         } catch (error) {
-            toast.error("Make sure you removed all products and categories first")
+            toast.error("Make sure you removed all products and color first")
         } finally {
             setLoading(false)
             setOpen(false)
