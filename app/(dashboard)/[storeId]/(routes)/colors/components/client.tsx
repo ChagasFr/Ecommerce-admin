@@ -8,11 +8,11 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
 
 
-import { SizeColumn, columns } from "./columns";
+import { ColorsColumn, columns } from "./columns";
 import { ApiList } from "@/components/ui/api-list";
 
 interface SizesClientProps {
-    data: SizeColumn[]
+    data: ColorsColumn[]
 }
 
 export const SizesClient: React.FC<SizesClientProps> = ({

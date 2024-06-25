@@ -3,14 +3,14 @@ import { format } from "date-fns"
 import prismadb from "@/lib/prismadb"
 
 import { SizesClient } from "./components/client"
-import { SizeColumn } from "./components/columns"
+import { ColorsColumn } from "./components/columns"
 
 const ColorsPage = async ({
     params
 }: {
     params: { storeId: string }
 }) => {
-    const sizes = await prismadb.size.findMany({
+    const colors = await prismadb.color.findMany({
         where: {
             storeId: params.storeId
         },
@@ -19,7 +19,7 @@ const ColorsPage = async ({
         }
     })
 
-    const formattedSizes: SizeColumn[] = sizes.map((item) => ({
+    const formattedColors: ColorsColumn[] = colors.map((item) => ({
         id: item.id,
         name: item.name,
         value: item.value,
@@ -29,7 +29,7 @@ const ColorsPage = async ({
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <SizesClient data={formattedSizes} />
+                <SizesClient data={formattedColors} />
             </div>
         </div>
     )
