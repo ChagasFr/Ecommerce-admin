@@ -11,11 +11,11 @@ import { DataTable } from "@/components/ui/data-table";
 import { ColorsColumn, columns } from "./columns";
 import { ApiList } from "@/components/ui/api-list";
 
-interface SizesClientProps {
+interface ColorsClientProps {
     data: ColorsColumn[]
 }
 
-export const SizesClient: React.FC<SizesClientProps> = ({
+export const ColorsClient: React.FC<ColorsClientProps> = ({
     data
 }) => {
     const router = useRouter
