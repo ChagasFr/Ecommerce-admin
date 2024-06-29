@@ -22,12 +22,12 @@ const formSchema = z.object({
     imageUrl: z.string().min(1)
 });
 
-type BillboardFormValues = z.infer<typeof formSchema>
-interface BillboardFormProps {
+type ProductFormValues = z.infer<typeof formSchema>
+interface ProductFormProps {
     initialData: Billboard | null;
 }
 
-export const BillboardForm: React.FC<BillboardFormProps> = ({
+export const ProductForm: React.FC<ProductFormProps> = ({
     initialData
 }) => {
     const params = useParams()
@@ -41,7 +41,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const toastMessage = initialData ? "Billboard updated." : "Billboard created.";
     const action = initialData ? "Save changes" : "Create";
 
-    const form = useForm<BillboardFormValues>({
+    const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             label: '',
@@ -49,7 +49,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         }
     });
 
-    const onSubmit = async (data: BillboardFormValues) => {
+    const onSubmit = async (data: ProductFormValues) => {
         try {
             setLoading(true)
             if (initialData) {
