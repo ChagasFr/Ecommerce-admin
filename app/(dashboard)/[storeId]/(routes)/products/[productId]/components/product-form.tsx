@@ -134,12 +134,45 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     )}
                     />
                     <div className="grid grid-cols-3 gap-8">
-                        <FormField control={form.control} name="images" render={({ field }) => (
+                        <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>LAbel</FormLabel>
+                                <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Product label" {...field} />
+                                    <Input disabled={loading} placeholder="Product name" {...field} />
                                 </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+
+                        <FormField control={form.control} name="price" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Price</FormLabel>
+                                <FormControl>
+                                    <Input type="number" disabled={loading} placeholder="9.99" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+
+                        <FormField control={form.control} name="billboardId" render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>billboard</FormLabel>
+                                <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue defaultValue={field.value} placeholder="Select a billboard" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {billboards.map((billboard) => (
+                                            <SelectItem key={billboard.id} value={billboard.id}>
+                                                {billboard.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
