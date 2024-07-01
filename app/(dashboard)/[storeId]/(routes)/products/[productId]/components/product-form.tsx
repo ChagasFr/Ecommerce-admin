@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
-import { Billboard, Store } from "@prisma/client";
+import { Product, Image } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -19,12 +19,14 @@ import ImagemUpLoad from "@/components/ui/image-upload";
 
 const formSchema = z.object({
     name: z.string().min(1),
-    imageUrl: z.string().min(1)
+    images: z.string().min(1)
 });
 
 type ProductFormValues = z.infer<typeof formSchema>
 interface ProductFormProps {
-    initialData: Billboard | null;
+    initialData: Product & {
+        images: Image[]
+    } | null;
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -44,8 +46,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
-            label: '',
-            imageUrl: ''
+            name: '',
+            images: [],
+            prices: 0,
+            categoryId: '',
+            colorId: '',
+            sizeId: '',
+            isFeatured: false,
+            isArquived: false,
         }
     });
 
