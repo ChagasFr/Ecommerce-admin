@@ -101,7 +101,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
     return (
         <>
-            <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={onDelete} loading={loading} />
+            <AlertModal
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                onConfirm={onDelete}
+                loading={loading}
+            />
             <div className="flex items-center justify-between">
                 <Heading title={title} description={description} />
                 {initialData && (
@@ -117,7 +122,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         <FormItem>
                             <FormLabel>Images</FormLabel>
                             <FormControl>
-                                <ImagemUpLoad value={field.value.map((image) => image.url)} disabled={loading} onChange={(url) => field.onChange(url)} onRemove={() => field.onChange("")} />
+                                <ImagemUpLoad
+                                    value={field.value.map((image) => image.url)}
+                                    disabled={loading}
+                                    onChange={(url) => field.onChange([...field.value, { url }])}
+                                    onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url)])}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
