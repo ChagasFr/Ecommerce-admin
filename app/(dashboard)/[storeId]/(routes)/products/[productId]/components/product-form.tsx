@@ -12,10 +12,11 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImagemUpLoad from "@/components/ui/image-upload";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -156,9 +157,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         )}
                         />
 
-                        <FormField control={form.control} name="billboardId" render={({ field }) => (
+                        <FormField control={form.control} name="categoryId" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>billboard</FormLabel>
+                                <FormLabel>Color</FormLabel>
                                 <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger>
@@ -166,9 +167,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        {billboards.map((billboard) => (
-                                            <SelectItem key={billboard.id} value={billboard.id}>
-                                                {billboard.label}
+                                        {categories.map((category) => (
+                                            <SelectItem key={category.id} value={category.id}>
+                                                {category.name}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
