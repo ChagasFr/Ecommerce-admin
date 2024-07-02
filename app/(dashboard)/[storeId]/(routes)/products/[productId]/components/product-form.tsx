@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
-import { Product, Image } from "@prisma/client";
+import { Product, Image, Category, Color, Size } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -34,10 +34,16 @@ interface ProductFormProps {
     initialData: Product & {
         images: Image[]
     } | null;
+    categories: Category[];
+    colors: Color[];
+    sizes: Size[];
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
-    initialData
+    initialData,
+    categories,
+    sizes,
+    colors
 }) => {
     const params = useParams()
     const router = useRouter
