@@ -48,7 +48,7 @@ export async function PATCH(
       sizeId,
       images,
       isFeatured,
-      isAchived,
+      isArchived,
     } = body;
 
     if (!userId) {
@@ -94,13 +94,21 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const billboard = await prismadb.billboard.updateMany({
+    const product = await prismadb.product.updateMany({
       where: {
-        id: params.billboardId,
+        id: params.productId,
       },
       data: {
-        label,
-        imageUrl,
+        name,
+        price,
+        colorId,
+        categoryId,
+        sizeId,
+        images: {
+          deleteMany: {},
+        },
+        isFeatured,
+        isArchived,
       },
     });
 
