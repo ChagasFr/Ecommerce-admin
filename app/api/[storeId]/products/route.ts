@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       sizeId,
       images,
       isFeatured,
-      isAchived
+      isArchived
      } = body;
     
     if (!userId) {
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
         name,
         price,
         isFeatured,
-        isAchived,
+        isArchived,
         categoryId,
         colorId,
         sizeId,
@@ -110,7 +110,7 @@ export async function GET(req: Request) {
             colorId,
             sizeId,
             isFeatured: isFeatured ? true: undefined,
-            isAchived: false
+            isArchived: false
         },
         include: {
           images: true,
