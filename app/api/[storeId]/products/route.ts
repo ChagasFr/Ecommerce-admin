@@ -111,6 +111,15 @@ export async function GET(req: Request) {
             sizeId,
             isFeatured: isFeatured ? true: undefined,
             isAchived: false
+        },
+        include: {
+          images: true,
+          category: true,
+          color: true,
+          size: true,
+        },
+        orderBy: {
+          createAt: 'desc'
         }
     });
 
