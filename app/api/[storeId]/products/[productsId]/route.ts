@@ -17,11 +17,17 @@ export async function GET(
       where: {
         id: params.productId,
       },
+      include: {
+        images: true,
+        category: true,
+        color: true,
+        size: true,
+      },
     });
 
     return NextResponse.json(product);
   } catch (error) {
-    console.log("[product_GET]", error);
+    console.log("[PRODUCT_GET]", error);
     return new NextResponse("interna error", { status: 500 });
   }
 }
@@ -34,14 +40,43 @@ export async function PATCH(
     const { userId } = auth();
     const body = await req.json();
 
-    const { laben, imageUrl } = body;
+    const {
+      name,
+      price,
+      colorId,
+      categoryId,
+      sizeId,
+      images,
+      isFeatured,
+      isAchived,
+    } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!imageUrl) {
-      return new NextResponse("image URL is required", { status: 400 });
+    if (!name) {
+      return new NextResponse("Name is required", { status: 400 });
+    }
+
+    if (!images || !images.length) {
+      return new NextResponse("images are required", { status: 400 });
+    }
+
+    if (!price) {
+      return new NextResponse("Price is required", { status: 400 });
+    }
+
+    if (!categoryId) {
+      return new NextResponse("Category is required", { status: 400 });
+    }
+
+    if (!sizeId) {
+      return new NextResponse("Size Id is required", { status: 400 });
+    }
+
+    if (!colorId) {
+      return new NextResponse("Color Id is required", { status: 400 });
     }
 
     if (!params.productId) {
