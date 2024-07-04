@@ -4,31 +4,31 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: { productId: string } }
 ) {
   try {
     const { userId } = auth();
 
-    if (!params.billboardId) {
-      return new NextResponse("billboard is required", { status: 400 });
+    if (!params.productId) {
+      return new NextResponse("product is required", { status: 400 });
     }
 
-    const billboard = await prismadb.billboard.findUnique({
+    const product = await prismadb.product.findUnique({
       where: {
-        id: params.billboardId,
+        id: params.productId,
       },
     });
 
-    return NextResponse.json(billboard);
+    return NextResponse.json(product);
   } catch (error) {
-    console.log("[BILLBOARD_GET]", error);
+    console.log("[product_GET]", error);
     return new NextResponse("interna error", { status: 500 });
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; productId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -44,8 +44,8 @@ export async function PATCH(
       return new NextResponse("image URL is required", { status: 400 });
     }
 
-    if (!params.billboardId) {
-      return new NextResponse("billboard Id is required", { status: 400 });
+    if (!params.productId) {
+      return new NextResponse("product Id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({

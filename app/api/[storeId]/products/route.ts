@@ -18,7 +18,6 @@ export async function POST(req: Request) {
       images,
       isFeatured,
       isAchived
-
      } = body;
     
     if (!userId) {
@@ -68,13 +67,25 @@ export async function POST(req: Request) {
         data: {
         name,
         price,
-        storeId: params.storeId
+        isFeatured,
+        isAchived,
+        categoryId,
+        colorId,
+        sizeId,
+        storeId: params.storeId,
+        images: {
+          createMany: {
+            data: [
+              ...images.map((image: { url: string}) => image)
+            ]
+          }
+        }
     },
     });
 
     return NextResponse.json(product);
 } catch (error) {
-    console.log("[BILLBOARDS_POST]", error);
+    console.log("[PRODUCTS_POST]", error);
     return new NextResponse("Interal error", { status: 500 });
 
 }
@@ -82,18 +93,39 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
     { params }: { params: { storeId: string }}
   try {
+
+    const { searchParams } = new URL.(req.url);
+    const categoryId = searchParams.get("categoryId") || undefined;
+    const colorId = searchParams.get("colorId") || undefined;
+    const sizeId = searchParams.get("sizeId") || undefined;
+    const isFeatured = searchParams.get("isFeatured") || undefined;
+
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
-    const billboards = await prismadb.billboard.findMany({
+    const products = await prismadb.product.findMany({
         where: {
-            storeId: params.storeId
+            storeId: params.storeId,
+            categoryId,
+            colorId,
+            sizeId,
+            isFeatured: isFeatured ? true: undefined,
+            isAchived: false
+        },
+        include: {
+          images: true,
+          category: true,
+          color: true,
+          size: true,
+        },
+        orderBy: {
+          createAt: 'desc'
         }
     });
 
-    return NextResponse.json(billboards);
+    return NextResponse.json(products);
   } catch (error) {
-    console.log("[BILLBOARDS_GET]", error);
+    console.log("[PRODUCTS_POST]", error);
     return new NextResponse("Interal error", { status: 500 });
   }
 }
