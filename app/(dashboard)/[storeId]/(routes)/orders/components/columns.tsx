@@ -3,21 +3,47 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { CellAction } from "./cell-action"
 
-export type BillboardColum = {
+export type OrderColumn = {
     id: string
-    label: string
+    phone: string
+    adress: string
+    isPaid: boolean
+    totalPrice: string
+    products: string
     createdAt: string
 }
 
-export const columns: ColumnDef<BillboardColum>[] = [
+export const columns: ColumnDef<OrderColumn>[] = [
     {
-        accessorKey: "label",
-        header: "Label",
+        accessorKey: "products",
+        header: "Products",
     },
+
+    {
+        accessorKey: "phone",
+        header: "Phone",
+    },
+
+    {
+        accessorKey: "adress",
+        header: "Adress",
+    },
+
+    {
+        accessorKey: "totalPrice",
+        header: "Total Price",
+    },
+
+    {
+        accessorKey: "isPaid",
+        header: "Paid",
+    },
+
     {
         accessorKey: "createAt",
         header: "Date",
     },
+
     {
         id: "actions",
         cell: ({ row }) => <CellAction data={row.original} />
