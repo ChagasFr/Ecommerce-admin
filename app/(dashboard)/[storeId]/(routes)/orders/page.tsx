@@ -3,35 +3,48 @@ import { format } from "date-fns"
 import prismadb from "@/lib/prismadb"
 
 import { BillboardClient } from "./components/client"
-import { BillboardColum } from "./components/columns"
+import { OrderColumn } from "./components/columns"
+import { formatter } from "@/lib/utils"
 
-const BillboardPage = async ({
+const OrdersPage = async ({
     params
 }: {
     params: { storeId: string }
 }) => {
-    const billboards = await prismadb.billboard.findMany({
+    const orders = await prismadb.billboard.findMany({
         where: {
             storeId: params.storeId
+        },
+        include: {
+            orderItems: {
+                include: {
+                    product: true
+                }
+            }
         },
         orderBy: {
             createdAt: 'desc'
         }
     })
 
-    const formattedBillboards: BillboardColum[] = billboards.map((item) => ({
+    const formattedOrders: OrderColumn[] = orders.map((item) => ({
         id: item.id,
-        label: item.label,
+        phone: item.phone,
+        adress: item.adress,
+        products: item.orderItems.map((orderItem) => orderItem.product.name).join(', '),
+        totalPrice: formatter.format(item.orderItems.reduce((total, item) => {
+            return total + Number(item.product.price)
+        }, 0)),
         createdAt: format(item.createdAt, "MMMM do, YYYY")
     }))
 
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <BillboardClient data={billboards} />
+                <BillboardClient data={formattedOrders} />
             </div>
         </div>
     )
 }
 
-export default BillboardPage
+export default OrdersPage
