@@ -94,7 +94,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const product = await prismadb.product.updateMany({
+    await prismadb.product.update({
       where: {
         id: params.productId,
       },
@@ -112,16 +112,29 @@ export async function PATCH(
       },
     });
 
-    return NextResponse.json(billboard);
+    const product = await prismadb.product.update({
+      where: {
+        id: params.productId,
+      },
+      data: {
+        images: {
+          createMany: {
+            data: [...images.map((images: { url: string }) => image)],
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(product);
   } catch (error) {
-    console.log("[BILLBOARD_PATCH]", error);
+    console.log("[PRODUCT_PATCH]", error);
     return new NextResponse("interna error", { status: 500 });
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; productId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -130,8 +143,8 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!params.billboardId) {
-      return new NextResponse("billboard is required", { status: 400 });
+    if (!params.productId) {
+      return new NextResponse("PRODUCT is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
@@ -145,16 +158,16 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const billboard = await prismadb.billboard.deleteMany({
+    const product = await prismadb.product.deleteMany({
       where: {
-        id: params.billboardId,
+        id: params.productId,
         userId,
       },
     });
 
-    return NextResponse.json(billboard);
+    return NextResponse.json(product);
   } catch (error) {
-    console.log("[BILLBOARD_DELETE]", error);
+    console.log("[PRODUCT_DELETE]", error);
     return new NextResponse("interna error", { status: 500 });
   }
 }
