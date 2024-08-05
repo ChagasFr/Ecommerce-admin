@@ -60,4 +60,24 @@ export async function POST(
       },
     },
   });
+
+  const session = await stripe.checkout.session.create({
+    line_items,
+    mode: "payment",
+    billing_adress_collection: {
+      enable: true,
+    },
+    success_url: `${process.env.FRONTEND_STORE_URL}/cart?sucess=1`,
+    cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?canceled=1`,
+    metadata: {
+      orderId: order.id,
+    },
+  });
+
+  return NextResponse.json(
+    { url: session.url },
+    {
+      headers: corsHeaders,
+    }
+  );
 }
