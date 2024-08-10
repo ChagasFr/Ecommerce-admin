@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatter } from "@/lib/utils";
 import { getSalesCount } from "@/actions/get-sales-count";
 import { getStockCount } from "@/actions/get-sock-count copy";
+import { Overview } from "@/components/overview";
 
 interface DashBoardPageProps {
     params: { storeId: string }
