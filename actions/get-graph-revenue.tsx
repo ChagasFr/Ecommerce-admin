@@ -46,6 +46,11 @@ export const getGraphRevenue = async (storeId: string) => {
         { name: "Out", total: 0 },
         { name: "Nov", total: 0 },
         { name: "Dec", total: 0 },
-    ]
+    ];
 
+    for (const month in monthyRevenue) {
+        graphData[parseInt(month)].total = monthyRevenue[parseInt(month)];
+    }
+
+    return graphData;
 }
