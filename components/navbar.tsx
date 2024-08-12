@@ -5,7 +5,7 @@ import { MainNav } from "@/components/main-nav"
 import StoreSwitcher from "@/components/store-switcher"
 import prismadb from "@/lib/prismadb";
 
-const Navbar = () => {
+const Navbar = async () => {
     const { userId } = auth();
 
     if (!userId) {
